@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-native';
+import { useTranslation } from 'react-i18next';
+
 
 
 function Button(props) {
@@ -13,30 +15,28 @@ function Button(props) {
   }
 
 export default function Login({navigation}) {
+  const { t } = useTranslation();
     return (
       <View style={styles.container}>
         <Image
           style={styles.logo}
-          source={require('../assets/login.png')}
+          source={require('../../assets/login.png')}
         />
-        <Text style={styles.subtitle}>Vive la Experiencia, Rompe Expectativas!</Text>
-        <Text style={styles.titleHelper}>
-         Introduzca los datos para iniciar sección
-        </Text>
+        <Text style={styles.subtitle}>{t('login:lifeExperience')}</Text>
+        <Text style={styles.titleHelper}>{t('login:introduceData')}</Text>
         
         <TextInput
           style={styles.TextInput}
-          placeholder='Usuario'
+          placeholder={t('login:user')}
         />
         <TextInput
           style={styles.TextInput}
-          placeholder='Contraseña'
+          placeholder={t('login:password')}
         />
         <StatusBar style="auto" />
         <Button
-          title="Iniciar Secion"
+          title={t('login:login')}
           onPress={() => navigation.navigate('Home')}
-          accessibilityLabel="Learn more about this purple button"
         />
       </View>
     );
