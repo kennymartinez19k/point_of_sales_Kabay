@@ -9,8 +9,8 @@ import SettingsScreen from './Components/Settings'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 import Profile from './Components/Profile'
-import { Products } from './Components/Products';
-
+import { Products } from './Components/Products/Products';
+import { ProductDetails } from './Components/Products/ProductDetails';
 
 
 const Tab = createBottomTabNavigator();
@@ -50,7 +50,7 @@ function Home() {
       tabBarActiveTintColor: 'tomato',
     })}
     >
-      <Tab.Group screenOptions={{ headerTitleAlign:"center", headerStyle: {backgroundColor: '#fff'}, headerTintColor: '#333'}}>
+      <Tab.Group screenOptions={{ headerTitleAlign:"center", headerStyle: {backgroundColor: '#fff'}, headerTintColor: '#333',}}>
         <Tab.Screen options={{ title: 'Inicio'}}  name="Main" component={HomeScreen} />
         <Tab.Screen options={{ title: 'Productos'}} name="Settings" component={Products} />
         
@@ -65,10 +65,11 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerTitleAlign:"center", headerStyle: {backgroundColor: '#4054F5'}, headerTintColor: '#fff'}} initialRouteName='Login'>
+      <Stack.Navigator screenOptions={{headerTitleAlign:"center", headerStyle: {backgroundColor: '#4054F5',}, headerTintColor: '#fff', headerTitleStyle: {fontSize: 18}}} initialRouteName='Login'>
         <Stack.Group >
-          <Stack.Screen name="Login" options={{headerShown: false}} component={Login} />
-          <Stack.Screen name="About" component={About} />
+          <Stack.Screen  name="Login" options={{headerShown: false}} component={Login} />
+          <Stack.Screen options={{ title: 'Detalles del Producto'}}  name="ProductDetails" component={ProductDetails} />
+          <Stack.Screen name="Sobre Nosotros" component={About} />
         </Stack.Group>
 
         <Stack.Screen
