@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 function Button(props) {
     const { onPress, title = 'Save' } = props;
@@ -11,14 +12,11 @@ function Button(props) {
 }
   
   export default function HomeScreen({navigation}) {
+    const { t } = useTranslation();
+
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-        <Button
-            title="Mas Sobre Nosotros"
-            onPress={() => navigation.navigate('About')}
-            accessibilityLabel="Learn more about this purple button"
-          />
+        <Text>{t('navigate:home')}</Text>
       </View>
     );
   }

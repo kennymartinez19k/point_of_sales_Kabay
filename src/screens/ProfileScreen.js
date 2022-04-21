@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, Image, StatusBar, ScrollView } from 'react-native';
-import { backgroundColor, borderBottomColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-import user_img from '../assets/user.png'
+import user_img from '../../assets/user.png'
 import Svg, {Path} from 'react-native-svg'
+import { useTranslation } from 'react-i18next';
 
 function MainUser () {
+  const { t } = useTranslation();
+
     return (
         <ScrollView style={styles.main}>
             <View style={styles.main_img}>
@@ -32,16 +34,16 @@ function MainUser () {
             <View style={styles.info_user}>
             
               <View style={styles.item_info}>
-                <Text style={styles.item_info_text}>Mis Productos</Text>
+                <Text style={styles.item_info_text}>{t('profile:myProducts')}</Text>
               </View>
               <View style={styles.item_info}>
-                <Text style={styles.item_info_text}>Mas Sobre Nosotros</Text>
+                <Text style={styles.item_info_text}>{t('profile:about')}</Text>
               </View>
               <View style={styles.item_info}>
-                <Text style={styles.item_info_text}>Configuracion</Text>
+                <Text style={styles.item_info_text}>{t('profile:configuration')}</Text>
               </View>
               <View style={styles.item_info}>
-                <Text style={styles.item_info_text}>Cerrar Seccion</Text>
+                <Text style={styles.item_info_text}>{t('profile:close')}</Text>
               </View>
             </View>
         </ScrollView>
@@ -54,9 +56,6 @@ export default function Profile() {
           <StatusBar
              animated={true}
              backgroundColor="#fff"
-            //  barStyle={styles.statusBar}
-            //  showHideTransition={statusBarTransition}
-            //  hidden={hidden}
             />
             <MainUser/>
       </View>
