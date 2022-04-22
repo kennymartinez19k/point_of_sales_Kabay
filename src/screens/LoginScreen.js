@@ -30,7 +30,7 @@ class Login extends React.Component {
           style={styles.logo}
           source={require('../../assets/login.png')}
         />
-        <Text>Lista {Object.keys(this.props)}</Text>
+        <Text>Lista {Object.keys(this.props.navigation.navigate)}</Text>
         <Text>Lista {this.props.user.users}</Text>
         <Text>{this.props.user.username}</Text>
         <TextInput
@@ -46,7 +46,7 @@ class Login extends React.Component {
         <StatusBar style="auto" />
         <Button
           // title={t('login:login')}
-          onPress={() => this.props.addUser()}
+          onPress={() => this.props.navigation.navigate("ProductDetails")}
         />
     </View>
      );

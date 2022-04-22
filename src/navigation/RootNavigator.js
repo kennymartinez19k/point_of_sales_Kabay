@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Login from '../screens/LoginScreen'
 import Profile from '../screens/ProfileScreen'
+import { ProductDetails } from '../screens/Products/ProductDetails';
 
 
 const Tab = createBottomTabNavigator();
@@ -73,6 +74,12 @@ export default function RootNavigator() {
       <Stack.Screen
         name="Home"
         component={Home}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="ProductDetails"
+        component={ProductDetails}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
