@@ -1,160 +1,167 @@
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, Image, StatusBar, ScrollView, Button } from 'react-native';
+import { connect } from 'react-redux';
 import user_img from '../../assets/user.png'
 import Svg, { Path } from 'react-native-svg'
 import { useTranslation } from 'react-i18next';
 import services from '../services';
+import actions from '../actions';
+import { bindActionCreators } from 'redux';
 
 
+// class MainUser extends React.Component {
+//   render() {
+//   const { t } = useTranslation();
+//   return (
+//     <ScrollView style={styles.main}>
+//       <View style={styles.main_img}>
+//         <Image style={styles.img_profile} source={user_img} />
+//         <Text style={styles.title}>Juan Martinez</Text>
+//         <Text style={styles.subtitle}>(809) 980-8621</Text>
+//         <Svg
+//           height="50%"
+//           width="100%"
+//           viewBox="0 0 1440 320"
+//           style={styles.wave}
+//         >
+//           <Path
+//             fill="#4054F5"
+//             d="M0,96L48,112C96,128,192,160,288,186.7C384
+//                   ,213,480,235,576,213.3C672,192,768,128,864,
+//                   128C960,128,1056,192,1152,208C1248,224,1344,192,
+//                   1392,176L1440,160L1440,0L1392,0C1344,0,1248,0,
+//                   1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,
+//                   384,0,288,0C192,0,96,0,48,0L0,0Z"
+//           />
+//         </Svg>
 
-function MainUser() {
-  const { t } = useTranslation();
+//       </View>
+//       <View style={styles.info_user}>
 
-  return (
-    <ScrollView style={styles.main}>
-      <View style={styles.main_img}>
-        <Image style={styles.img_profile} source={user_img} />
-        <Text style={styles.title}>Juan Martinez</Text>
-        <Text style={styles.subtitle}>(809) 980-8621</Text>
-        <Svg
-          height="50%"
-          width="100%"
-          viewBox="0 0 1440 320"
-          style={styles.wave}
-        >
-          <Path
-            fill="#4054F5"
-            d="M0,96L48,112C96,128,192,160,288,186.7C384
-                  ,213,480,235,576,213.3C672,192,768,128,864,
-                  128C960,128,1056,192,1152,208C1248,224,1344,192,
-                  1392,176L1440,160L1440,0L1392,0C1344,0,1248,0,
-                  1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,
-                  384,0,288,0C192,0,96,0,48,0L0,0Z"
+//         <View style={styles.item_info}>
+//           <Text style={styles.item_info_text}>{t('profile:myProducts')}</Text>
+//         </View>
+//         <View style={styles.item_info}>
+//           <Text style={styles.item_info_text}>{t('profile:about')}</Text>
+//         </View>
+//         <View style={styles.item_info}>
+//           <Text style={styles.item_info_text}>{t('profile:configuration')}</Text>
+//         </View>
+//         <View style={styles.item_info}>
+//           <Text style={styles.item_info_text}>{t('profile:close')}</Text>
+//         </View>
+//       </View>
+//     </ScrollView>
+//   );
+//   }
+// }
+class Profile extends React.Component {
+  // constructor (props) {
+  //   super(props)
+  //   this.state = {
+  //     template: null
+  //   }
+  // }
+  render() {
+    const productTemplate = (product, index) => {
+      return (
+        <View key={`View_${product.id}`}>
+          <Text>-------------------------------</Text>
+          <Text>Product: {product.name}</Text>
+          <Button
+            key={ `Edit_${product.id}` }
+            title={ `Editar ${ product.name }` }
+            onPress={() =>
+              updateProduct(product, index)
+            }
           />
-        </Svg>
-
-      </View>
-      <View style={styles.info_user}>
-
-        <View style={styles.item_info}>
-          <Text style={styles.item_info_text}>{t('profile:myProducts')}</Text>
+           <Button
+            key={ `Delete_${product.id}` }
+            title={ `Eliminar ${ product.name }` }
+            onPress={() =>
+              deleteProduct(product, index)
+            }
+          />
         </View>
-        <View style={styles.item_info}>
-          <Text style={styles.item_info_text}>{t('profile:about')}</Text>
-        </View>
-        <View style={styles.item_info}>
-          <Text style={styles.item_info_text}>{t('profile:configuration')}</Text>
-        </View>
-        <View style={styles.item_info}>
-          <Text style={styles.item_info_text}>{t('profile:close')}</Text>
-        </View>
-      </View>
-    </ScrollView>
-  )
-}
+        
+      )
+    }
+  
 
-export default function Profile() {
-  const [productView, setProductView] = useState(null)
+    const createProduct = () => {
+      const randomNumber = Math.floor(Math.random() * 100) + 1
+      const bodyProduct = {
+        categoryId: 1,
+        supplierId: 1,
+        name: "Fruta " + randomNumber,
+        barcode: "Fruta " + randomNumber,
+        description: "Mi Fruta" + randomNumber,
+        image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
+        sellPrice: 30,
+        buyPrice: 20,
+        productStock: 50,
+        productWeight: 2.2,
+        additionalAttributes: [
+          {
+            name: "Color",
+            value: "Color " + randomNumber
+          }
+        ]
+      };
+      this.props.createProduct(bodyProduct, productTemplate)
+    }
 
-  const productTemplate = (product) => {
+    const updateProduct = async (product, productIndex) => {
+      const randomNumber = Math.floor(Math.random() * 100) + 1
+      const bodyProduct = {
+        id: product.id,
+        categoryId: 1,
+        supplierId: 1,
+        name: "Fruta " + randomNumber,
+        barcode: "Fruta " + randomNumber,
+        description: "Mi Fruta" + randomNumber,
+        image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
+        sellPrice: 30,
+        buyPrice: 20,
+        productStock: 50,
+        productWeight: 2.2,
+        additionalAttributes: [
+          {
+            name: "Color",
+            value: "Color " + randomNumber
+          },
+          {
+            name: "Genero",
+            value: "Genero " + randomNumber
+          },
+        ]
+      };
+      this.props.updateProduct(product.id, bodyProduct, productTemplate, productIndex)
+      
+      alert("Se actualizo el producto ")
+    }
+
+    const deleteProduct = (product, index) => {
+      this.props.deleteProduct(product.id, index)
+      alert("Se borro el producto ")
+    }
     return (
-      <View key={product.id}>
-        <Text>{product.name}</Text>
+      <View style={styles.container}>
+        <StatusBar
+          animated={true}
+          backgroundColor="#fff"
+        />
+        {/* <MainUser /> */}
+         {this.props.product.products}
+        <Text>Fin Product View</Text>
+        <Button title='Product List' onPress={() => this.props.getProducts(productTemplate)} />
+        <Button title='Only Product' onPress={() => this.props.getProduct(1, productTemplate)} />
+        <Button title='Crear Product' onPress={() => createProduct()} />
+        <Button title='Reset Product List' onPress={() => this.props.resetProducts()} />
       </View>
-    )
+    );
   }
-  async function getProducts() {
-    let productsTemplate = await services.product.getAll(productTemplate)
-    setProductView(productsTemplate)
-  }
-
-  async function getOnlyProduct() {
-    let product = await services.product.get(1, productTemplate)
-    setProductView(product)
-  }
-
-  async function createProduct() {
-    const randomNumber = Math.floor(Math.random() * 100) + 1
-    let response = await services.product.create({
-      categoryId: 1,
-      supplierId: 1,
-      name: "Fruta " + randomNumber,
-      barcode: "Fruta " + randomNumber,
-      description: "Mi Fruta" + randomNumber,
-      image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
-      sellPrice: 30,
-      buyPrice: 20,
-      productStock: 50,
-      productWeight: 2.2,
-      additionalAttributes: [
-        {
-          name: "Color",
-          value: "Color " + randomNumber
-        }
-      ]
-    })
-    console.log(response)
-    alert("Creado el producto Fruta " + randomNumber)
-  }
-
-  async function updateProduct() {
-    const randomNumber = Math.floor(Math.random() * 100) + 1
-    let response = await services.product.update(1, {
-      id: 1,
-      categoryId: 1,
-      supplierId: 1,
-      name: "Fruta " + randomNumber,
-      barcode: "Fruta " + randomNumber,
-      description: "Mi Fruta" + randomNumber,
-      image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
-      sellPrice: 30,
-      buyPrice: 20,
-      productStock: 50,
-      productWeight: 2.2,
-      additionalAttributes: [
-        {
-          name: "Color",
-          value: "Color " + randomNumber
-        },
-        {
-          name: "Genero",
-          value: "Genero " + randomNumber
-        },
-      ]
-    })
-    alert("Se actualizo el producto ")
-    console.log(response)
-  }
-
-
-  async function deleteProduct() {
-    let response = await services.product.delete(3)
-    alert("Se borro el producto ")
-    console.log(response)
-  }
-
-
-
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor="#fff"
-      />
-      <MainUser />
-      <Text>Inicio Product View</Text>
-      {productView}
-      <Text>Fin Product View</Text>
-      <Button title='Product List' onPress={async () => await getProducts()} />
-      <Button title='Only Product' onPress={async () => await getOnlyProduct()} />
-      <Button title='Crear Product' onPress={async () => await createProduct()} />
-      <Button title='Update First Product' onPress={async () => await updateProduct()} />
-      <Button title='Delete Product' onPress={async () => await deleteProduct()} />
-    </View>
-  );
 }
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -254,3 +261,23 @@ const styles = StyleSheet.create({
 
 
 });
+
+const mapStateToProps = (state) => {
+  const { product } = state
+  return { product }
+};
+
+
+function mapDispatchToProps(dispatch){
+  return {
+    getProducts: bindActionCreators(actions.product.getProducts, dispatch),
+    getProduct: bindActionCreators(actions.product.getProduct, dispatch),
+    createProduct: bindActionCreators(actions.product.createProduct, dispatch),
+    updateProduct: bindActionCreators(actions.product.updateProduct, dispatch),
+    deleteProduct: bindActionCreators(actions.product.deleteProduct, dispatch),
+    resetProducts: bindActionCreators(actions.product.resetProducts, dispatch),
+    
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
