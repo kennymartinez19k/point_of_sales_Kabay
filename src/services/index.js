@@ -1,6 +1,6 @@
-import BaseApiService from './baseApiService'
+import MockApiService from './mockApiService'
 const services = {
-    product: new BaseApiService("product")
+    product: new MockApiService("product"),
 }
 
 export default services
