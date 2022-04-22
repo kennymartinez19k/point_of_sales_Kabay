@@ -42,6 +42,7 @@ const LANGUAGE_DETECTOR = {
   .use(initReactI18next)
   // set options
   .init({
+    compatibilityJSON: 'v3', //Add this line
     resources: LANGUAGES,
     react: {
       useSuspense: false

@@ -45,6 +45,18 @@ function MainUser () {
               <View style={styles.item_info}>
                 <Text style={styles.item_info_text}>{t('profile:close')}</Text>
               </View>
+              <View style={styles.item_info}>
+                <Text style={styles.item_info_text}>{t('profile:close')}</Text>
+              </View>
+              <View style={styles.item_info}>
+                <Text style={styles.item_info_text}>{t('profile:close')}</Text>
+              </View>
+              <View style={styles.item_info}>
+                <Text style={styles.item_info_text}>{t('profile:close')}</Text>
+              </View>
+              <View style={styles.item_info}>
+                <Text style={styles.item_info_text}>{t('profile:close')}</Text>
+              </View>
             </View>
         </ScrollView>
     )

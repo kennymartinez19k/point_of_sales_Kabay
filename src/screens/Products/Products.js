@@ -1,56 +1,56 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-native';
-import img from '../../assets/image.png'
+import img from '../../../assets/image.png'
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView, ScrollView } from 'react-native';
 
 const listProducts = [
     {
         name: "Fresas",
         price: "20$",
-        img: '../assets/image.png'
+        img: '../../../assets/image.png'
     },
     {
         name: "Chocolates",
         price: "20$",
-        img: '../assets/image.png'
+        img: '../../../assets/image.png'
     },
     {
         name: "Azucar",
         price: "20$",
-        img: '../assets/image.png'
+        img: '../../../assets/image.png'
     },
     {
         name: "Leche",
         price: "20$",
-        img: '../assets/image.png'
+        img: '../../../assets/image.png'
     },
     {
         name: "Cafe",
         price: "20$",
-        img: '../assets/image.png'
+        img: '../../../assets/image.png'
     }
 ]
 
 export const Products = ({navigation}) => {
   return (
-   <View style={styles.container}>
-        <View style={styles.list_items}>
-       {listProducts.map((prod, idx) => (
-           <Pressable  key={idx + prod.name} onPress={() => navigation.navigate('ProductDetails')}  style={styles.item}>
-               <Image style={styles.prod_img} source={img}/>
-               <Text style={styles.title_item}>{prod.name}</Text>
-               <Text style={styles.info_item}>{prod.price}</Text>
-               <Ionicons
-                name='cart'
-                size={24}
-                color="#000"
-                />
-           </Pressable>
+        <ScrollView style={styles.container} >
+            <View style={styles.list_items}>
+                {listProducts.map((prod, idx) => (
+                    <Pressable  key={idx + prod.name} onPress={() => navigation.navigate('ProductDetails', prod)} style={styles.item}>
+                        <Image style={styles.prod_img} source={img}/>
+                        <Text style={styles.title_item}>{prod.name}</Text>
+                        <Text style={styles.info_item}>{prod.price}</Text>
+                        <Ionicons
+                            name='cart'
+                            size={24}
+                            color="#000"
+                            />
+                    </Pressable>
 
-       ))}
-            
-        </View>       
-   </View>
+                ))}
+            </View>
+        </ScrollView>       
   )
 }
 
@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         padding: 2,
         margin: '5%',
-        borderWidth: 0.2,
-        borderColor: '#ccc',
+        backgroundColor: '#fff',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -83,7 +82,6 @@ const styles = StyleSheet.create({
     list_items:{
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
         flexWrap: 'wrap'
     },
     prod_img:{
