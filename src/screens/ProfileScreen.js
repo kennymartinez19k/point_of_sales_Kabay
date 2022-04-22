@@ -5,7 +5,7 @@ import user_img from '../../assets/user.png'
 import Svg, { Path } from 'react-native-svg'
 import { useTranslation } from 'react-i18next';
 import services from '../services';
-import actions from '../actions';
+import {createProduct, getProduct, deleteProduct, getProducts, resetProducts, updateProduct } from '../actions/productAction';
 import { bindActionCreators } from 'redux';
 
 
@@ -270,12 +270,12 @@ const mapStateToProps = (state) => {
 
 function mapDispatchToProps(dispatch){
   return {
-    getProducts: bindActionCreators(actions.product.getProducts, dispatch),
-    getProduct: bindActionCreators(actions.product.getProduct, dispatch),
-    createProduct: bindActionCreators(actions.product.createProduct, dispatch),
-    updateProduct: bindActionCreators(actions.product.updateProduct, dispatch),
-    deleteProduct: bindActionCreators(actions.product.deleteProduct, dispatch),
-    resetProducts: bindActionCreators(actions.product.resetProducts, dispatch),
+    getProducts: bindActionCreators(getProducts, dispatch),
+    getProduct: bindActionCreators(getProduct, dispatch),
+    createProduct: bindActionCreators(createProduct, dispatch),
+    updateProduct: bindActionCreators(updateProduct, dispatch),
+    deleteProduct: bindActionCreators(deleteProduct, dispatch),
+    resetProducts: bindActionCreators(resetProducts, dispatch),
     
   }
 }
