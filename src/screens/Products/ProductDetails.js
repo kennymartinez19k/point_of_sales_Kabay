@@ -1,18 +1,15 @@
 import { useRoute } from '@react-navigation/native';
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-native';
+import img from '../../../assets/image.png'
 
 export const ProductDetails = () => {
 
   const route = useRoute()
-  const image = require(route.params.img)
   return (
     <View>
         <Text>{route.params.name}</Text>
-        <Image style={styles.img} source={image}/>
-        {
-          console.log(image)
-        }
+        <Image style={styles.img} source={img}/>
         <Text>{route.params.name}</Text>
     </View>
   )
@@ -20,7 +17,7 @@ export const ProductDetails = () => {
 
 const styles = StyleSheet.create({
   img:{
-    width: 80,
-    height: 50
+    width: '80%',
+    height: '50%'
   }
 })

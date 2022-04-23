@@ -5,8 +5,6 @@ import Svg, { Path } from 'react-native-svg'
 import { useTranslation } from 'react-i18next';
 import services from '../services';
 
-
-
 function MainUser() {
   const { t } = useTranslation();
 
