@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-native';
 import { useTranslation } from 'react-i18next';
-
-
+import {useDispatch, useSelector} from 'react-redux';
+import { addUser, changePassword, changeUser } from '../actions/userAction'
 
 function Button(props) {
     const { onPress, title = 'Save' } = props;
@@ -15,6 +15,8 @@ function Button(props) {
   }
 
 export default function Login({navigation}) {
+  const dispatch = useDispatch();
+  const data = useSelector(state => state);
   const { t } = useTranslation();
     return (
       <View style={styles.container}>
@@ -24,14 +26,17 @@ export default function Login({navigation}) {
         />
         <Text style={styles.subtitle}>{t('login:lifeExperience')}</Text>
         <Text style={styles.titleHelper}>{t('login:introduceData')}</Text>
-        
+        <Text>LOGIN: {Object.keys(data)}</Text>
+        <Text>UserName: {data.user.username}</Text>
         <TextInput
           style={styles.TextInput}
           placeholder={t('login:user')}
+          onChangeText={text => dispatch(changeUser(text)) } value={data.user.username}
         />
         <TextInput
           style={styles.TextInput}
           placeholder={t('login:password')}
+          onChangeText={text => dispatch(changePassword(text)) } value={data.user.password}
         />
         <StatusBar style="auto" />
         <Button
