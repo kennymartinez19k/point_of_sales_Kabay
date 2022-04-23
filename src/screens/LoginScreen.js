@@ -1,58 +1,51 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-native';
 import { useTranslation } from 'react-i18next';
+import {useDispatch, useSelector} from 'react-redux';
 import { addUser, changePassword, changeUser } from '../actions/userAction'
 
-
-
-class Button extends React.Component {
-  render() {
-    const { onPress, title = 'Save' } = this.props;
-    // const { t } = useTranslation();
+function Button(props) {
+    const { onPress, title = 'Save' } = props;
     return (
-        <Pressable style={styles.button} onPress={onPress}>
-          <Text style={styles.text}>Button</Text>
-        </Pressable>
-      );
-    }
- }
-class Login extends React.Component {
-   render() {
-    // const { t } = useTranslation();
-   
-     
-     return (
+      <Pressable style={styles.button} onPress={onPress}>
+        <Text style={styles.text}>{title}</Text>
+      </Pressable>
+    );
+  }
+
+export default function Login({navigation}) {
+  const dispatch = useDispatch();
+  const data = useSelector(state => state);
+  const { t } = useTranslation();
+    return (
       <View style={styles.container}>
         <Image
           style={styles.logo}
           source={require('../../assets/login.png')}
         />
-        <Text>Lista {Object.keys(this.props.navigation.navigate)}</Text>
-        <Text>Lista {this.props.user.users}</Text>
-        <Text>{this.props.user.username}</Text>
+        <Text style={styles.subtitle}>{t('login:lifeExperience')}</Text>
+        <Text style={styles.titleHelper}>{t('login:introduceData')}</Text>
+        <Text>LOGIN: {Object.keys(data)}</Text>
+        <Text>UserName: {data.user.username}</Text>
         <TextInput
           style={styles.TextInput}
-          // placeholder={t('login:user')}
-          onChangeText={text => this.props.changeUser(text)} value={this.props.user.username}
+          placeholder={t('login:user')}
+          onChangeText={text => dispatch(changeUser(text)) } value={data.user.username}
         />
         <TextInput
           style={styles.TextInput}
-          // placeholder={t('login:password')}
-          onChangeText={text => this.props.changePassword(text)} value={this.props.user.password}
+          placeholder={t('login:password')}
+          onChangeText={text => dispatch(changePassword(text)) } value={data.user.password}
         />
         <StatusBar style="auto" />
         <Button
-          // title={t('login:login')}
-          onPress={() => this.props.navigation.navigate("ProductDetails")}
+          title={t('login:login')}
+          onPress={() => navigation.navigate('Home')}
         />
-    </View>
-     );
-   }
-}
-
+      </View>
+    );
+  }
 
   const styles = StyleSheet.create({
     container: {
@@ -107,18 +100,3 @@ class Login extends React.Component {
       marginBottom: 10,
     }
   });
-
-  const mapStateToProps = (state) => {
-    const { user } = state
-    return { user }
-  };
-
-  function mapDispatchToProps(dispatch){
-    return {
-      addUser: bindActionCreators(addUser, dispatch),
-      changePassword: bindActionCreators(changePassword, dispatch),
-      changeUser: bindActionCreators(changeUser, dispatch),
-    }
-  }
-  
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
