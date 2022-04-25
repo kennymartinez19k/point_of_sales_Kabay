@@ -41,9 +41,8 @@ const listProducts = [
 ]
 
 
-export const Products = ({navigation}) => {
-  const dispatch = useDispatch();
-
+export const ProductsList = ({navigation}) => {
+ const dispatch = useDispatch();
   
  function setProduct(prod) {
     dispatch(setCurrentProduct(prod))

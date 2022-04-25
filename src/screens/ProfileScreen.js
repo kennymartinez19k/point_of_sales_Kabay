@@ -1,13 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, StatusBar, ScrollView, Button } from 'react-native';
+import { Text, View, StyleSheet, Image, StatusBar, ScrollView, Button, Pressable, TouchableOpacity } from 'react-native';
 import user_img from '../../assets/user.png'
 import Svg, { Path } from 'react-native-svg'
 import { useTranslation } from 'react-i18next';
-import services from '../services';
-import {createProduct, getProduct, deleteProduct, getProducts, resetProducts, updateProduct } from '../actions/productAction';
-import {useDispatch, useSelector} from 'react-redux';
 
-function MainUser() {
+export const ProfileScreen = ({navigation}) => {
   const { t } = useTranslation();
 
   return (
@@ -35,123 +32,22 @@ function MainUser() {
 
       </View>
       <View style={styles.info_user}>
-
-        <View style={styles.item_info}>
+        
+        <TouchableOpacity style={styles.item_info}>
           <Text style={styles.item_info_text}>{t('profile:myProducts')}</Text>
-        </View>
-        <View style={styles.item_info}>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.item_info}>
           <Text style={styles.item_info_text}>{t('profile:about')}</Text>
-        </View>
-        <View style={styles.item_info}>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.item_info}>
           <Text style={styles.item_info_text}>{t('profile:configuration')}</Text>
-        </View>
-        <View style={styles.item_info}>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')} style={styles.item_info}>
           <Text style={styles.item_info_text}>{t('profile:close')}</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   )
-}
-
-export default function Profile() {
-  const [productView, setProductView] = useState(null)
-
-  const productTemplate = (product) => {
-    return (
-      <View key={product.id}>
-        <Text>{product.name}</Text>
-      </View>
-    )
-  }
-  async function getProducts() {
-    let productsTemplate = await services.product.getAll(productTemplate)
-    setProductView(productsTemplate)
-  }
-
-  async function getOnlyProduct() {
-    let product = await services.product.get(1, productTemplate)
-    setProductView(product)
-  }
-
-  async function createProduct() {
-    const randomNumber = Math.floor(Math.random() * 100) + 1
-    let response = await services.product.create({
-      categoryId: 1,
-      supplierId: 1,
-      name: "Fruta " + randomNumber,
-      barcode: "Fruta " + randomNumber,
-      description: "Mi Fruta" + randomNumber,
-      image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
-      sellPrice: 30,
-      buyPrice: 20,
-      productStock: 50,
-      productWeight: 2.2,
-      additionalAttributes: [
-        {
-          name: "Color",
-          value: "Color " + randomNumber
-        }
-      ]
-    })
-    console.log(response)
-    alert("Creado el producto Fruta " + randomNumber)
-  }
-
-  async function updateProduct() {
-    const randomNumber = Math.floor(Math.random() * 100) + 1
-    let response = await services.product.update(1, {
-      id: 1,
-      categoryId: 1,
-      supplierId: 1,
-      name: "Fruta " + randomNumber,
-      barcode: "Fruta " + randomNumber,
-      description: "Mi Fruta" + randomNumber,
-      image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
-      sellPrice: 30,
-      buyPrice: 20,
-      productStock: 50,
-      productWeight: 2.2,
-      additionalAttributes: [
-        {
-          name: "Color",
-          value: "Color " + randomNumber
-        },
-        {
-          name: "Genero",
-          value: "Genero " + randomNumber
-        },
-      ]
-    })
-    alert("Se actualizo el producto ")
-    console.log(response)
-  }
-
-
-  async function deleteProduct() {
-    let response = await services.product.delete(3)
-    alert("Se borro el producto ")
-    console.log(response)
-  }
-
-
-
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor="#fff"
-      />
-      <MainUser />
-      <Text>Inicio Product View</Text>
-      {productView}
-      <Text>Fin Product View</Text>
-      <Button title='Product List' onPress={async () => await getProducts()} />
-      <Button title='Only Product' onPress={async () => await getOnlyProduct()} />
-      <Button title='Crear Product' onPress={async () => await createProduct()} />
-      <Button title='Update First Product' onPress={async () => await updateProduct()} />
-      <Button title='Delete Product' onPress={async () => await deleteProduct()} />
-    </View>
-  );
 }
 
 
@@ -254,101 +150,3 @@ const styles = StyleSheet.create({
 
 
 });
-
-
-export default function Profile() {
-  const dispatch = useDispatch();
-  const data = useSelector(state => state);
-
-  const productTemplate = (product, index) => {
-    return (
-      <View key={`View_${product.id}`}>
-        <Text>-------------------------------</Text>
-        <Text>Product: {product.name}</Text>
-        <Button
-          key={ `Edit_${product.id}` }
-          title={ `Editar ${ product.name }` }
-          onPress={() =>
-            localUpdateProduct(product, index)
-          }
-        />
-         <Button
-          key={ `Delete_${product.id}` }
-          title={ `Eliminar ${ product.name }` }
-          onPress={() =>
-            dispatch(deleteProduct(product.id, index))
-          }
-        />
-      </View>
-      
-    )
-  }
-
-  const localCreateProduct = () => {
-    const randomNumber = Math.floor(Math.random() * 100) + 1
-    const bodyProduct = {
-      categoryId: 1,
-      supplierId: 1,
-      name: "Fruta " + randomNumber,
-      barcode: "Fruta " + randomNumber,
-      description: "Mi Fruta" + randomNumber,
-      image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
-      sellPrice: 30,
-      buyPrice: 20,
-      productStock: 50,
-      productWeight: 2.2,
-      additionalAttributes: [
-        {
-          name: "Color",
-          value: "Color " + randomNumber
-        }
-      ]
-    };
-    dispatch(createProduct(bodyProduct, productTemplate))
-  }
-
-  const localUpdateProduct = async (product, productIndex) => {
-    const randomNumber = Math.floor(Math.random() * 100) + 1
-    const bodyProduct = {
-      id: product.id,
-      categoryId: 1,
-      supplierId: 1,
-      name: "Fruta " + randomNumber,
-      barcode: "Fruta " + randomNumber,
-      description: "Mi Fruta" + randomNumber,
-      image: "https://ichef.bbci.co.uk/news/640/cpsprodpb/8E59/production/_122514463_fr.jpg",
-      sellPrice: 30,
-      buyPrice: 20,
-      productStock: 50,
-      productWeight: 2.2,
-      additionalAttributes: [
-        {
-          name: "Color",
-          value: "Color " + randomNumber
-        },
-        {
-          name: "Genero",
-          value: "Genero " + randomNumber
-        },
-      ]
-    };
-    dispatch(updateProduct(product.id, bodyProduct, productTemplate, productIndex))
-    
-    alert("Se actualizo el producto ")
-  }
-  return (
-    <View style={styles.container}>
-      <StatusBar
-        animated={true}
-        backgroundColor="#fff"
-      />
-      {/* <MainUser /> */}
-       {data.product.products}
-      <Text>Fin Product View</Text>
-      <Button title='Product List' onPress={() => dispatch(getProducts(productTemplate))} />
-      <Button title='Only Product' onPress={() => dispatch(getProduct(1, productTemplate))} />
-      <Button title='Crear Product' onPress={() => localCreateProduct()} />
-      <Button title='Reset Product List' onPress={() => dispatch(resetProducts())} />
-    </View>
-  );
-};

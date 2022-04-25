@@ -1,5 +1,5 @@
 import services from '../services';
-import {  ACTION_GET_PRODUCTS, ACTION_INSERT_PRODUCT, ACTION_GET_PRODUCT, ACTION_UPDATE_PRODUCT, ACTION_DELETE_PRODUCT, ACTION_RESET_PRODUCT} from '../constants'
+import {  ACTION_GET_PRODUCTS, ACTION_INSERT_PRODUCT, ACTION_GET_PRODUCT, ACTION_UPDATE_PRODUCT, ACTION_DELETE_PRODUCT, ACTION_RESET_PRODUCT, ACTION_SET_CURRENT_PRODUCT, ACTION_GET_CURRENT_PRODUCT} from '../constants'
 
 export function resetProducts(data = []) {
     return {
@@ -41,4 +41,16 @@ export const deleteProduct = (id, index, config = null) => {
         await services.product.delete(id, config)
         dispatch({ type: ACTION_DELETE_PRODUCT, payload: id});
     };
+};
+export const setCurrentProduct = (product) => {
+    return async dispatch => {
+        await services.product.setProduct(product)
+        dispatch({type:  ACTION_SET_CURRENT_PRODUCT , payload: product})
+    }
+};
+export const getCurrentProduct = () => {
+    return async dispatch => {
+        let res = await services.product.getProduct()
+        dispatch({type:  ACTION_GET_CURRENT_PRODUCT , payload: res})
+    }
 };

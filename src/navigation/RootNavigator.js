@@ -9,9 +9,12 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Login from '../screens/LoginScreen'
-import Profile from '../screens/ProfileScreen'
+import {ProfileScreen} from '../screens/ProfileScreen'
+import {ProofScreen} from '../screens/ProofScreen'
+
 import {Products} from '../screens/Products/Products'
 import { ProductDetails} from '../screens/Products/ProductDetails'
+
 
 
 const Tab = createBottomTabNavigator();
@@ -55,8 +58,8 @@ function Home() {
     >
       <Tab.Group screenOptions={{ headerTitleAlign:"center", headerStyle: {backgroundColor: '#fff'}, headerTintColor: '#333'}}>
         <Tab.Screen options={{ title: t('navigate:home')}}  name="Main" component={Products} />
-        <Tab.Screen options={{ title: t('navigate:settings')}} name="Settings" component={SettingsScreen} />
-        <Tab.Screen options={{ title: t('navigate:profile'), headerShown: false }} name="Profile" component={Profile} />
+        {/* <Tab.Screen options={{ title: t('navigate:settings')}} name="Settings" component={SettingsScreen} /> */}
+        <Tab.Screen options={{ title: t('navigate:profile'), headerShown: false }} name="Profile" component={ProfileScreen} />
       </Tab.Group>
     </Tab.Navigator>
   );
@@ -80,7 +83,17 @@ export default function RootNavigator() {
       <Stack.Screen
         name="ProductDetails"
         component={ProductDetails}
-        options={{title: 'Detalles'}}
+        options={{title: 'Detalles', headerShown: false}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProofScreen}
+        options={{title: 'Pruebas'}}
+      />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{title: 'Configuraciones'}}
       />
     </Stack.Navigator>
   </NavigationContainer>

@@ -43,6 +43,10 @@ export default function Login({navigation}) {
           title={t('login:login')}
           onPress={() => navigation.navigate('Home')}
         />
+        <Button
+          title="Pruebas"
+          onPress={() => navigation.navigate('Profile')}
+        />
       </View>
     );
   }

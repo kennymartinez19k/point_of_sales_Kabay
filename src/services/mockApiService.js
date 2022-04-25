@@ -4,7 +4,7 @@ import API_HOST from '../constants'
 class MockApiService {
   constructor(controller) {
     this.controller = controller
-    this.products = []
+    this.products = [],
     this.counter = 1
   }
   async getAll(templateFn = null, config = null) {
@@ -30,6 +30,7 @@ class MockApiService {
     this.products.push(data)
   }
 
+ 
   async update(id, data, config = null) {
     let productIndex = this.products.findIndex(x => x.id == id)
     if (productIndex > -1) {
