@@ -1,6 +1,38 @@
-import {  ACTION_GET_PRODUCTS, ACTION_INSERT_PRODUCT, ACTION_GET_PRODUCT, ACTION_UPDATE_PRODUCT, ACTION_DELETE_PRODUCT, ACTION_RESET_PRODUCT, ACTION_ADD_USER, ACTION_CHANGE_PASSWORD, ACTION_CHANGE_USER } from '../constants'
+import {  ACTION_GET_PRODUCTS, ACTION_INSERT_PRODUCT, ACTION_GET_PRODUCT, ACTION_UPDATE_PRODUCT, ACTION_DELETE_PRODUCT, ACTION_RESET_PRODUCT, ACTION_SET_CURRENT_PRODUCT, ACTION_ADD_USER, ACTION_CHANGE_PASSWORD, ACTION_GET_CURRENT_PRODUCT, ACTION_CHANGE_USER } from '../constants'
 const INITIAL_STATE = {
-    products: [],
+    products: [
+      {
+          name: "Chocolates",
+          price: "20$",
+          addToCart: false
+      },
+      {
+          name: "Fresas",
+          price: "20$",
+          img: '../../../assets/image.png',
+          addToCart: false
+      },
+      {
+          name: "Azucar",
+          price: "20$",
+          img: '../../../assets/image.png',
+          addToCart: false
+      },
+      {
+          name: "Leche",
+          price: "20$",
+          img: '../../../assets/image.png',
+          addToCart: false
+      },
+      {
+          name: "Cafe",
+          price: "20$",
+          img: '../../../assets/image.png',
+          addToCart: false
+      }
+  ],
+    
+    showImagePrevious: null,
     currentProduct: null,
     users: ["hola", "adios"],
     username: "Emy Saul",
@@ -9,6 +41,7 @@ const INITIAL_STATE = {
  
 const productReducer = (state = INITIAL_STATE, action) => {
     const { products } = state
+    console.log(action.type, '!!!!!!!!!!!!!!!!!!!!!!!!!!')
     switch (action.type) {
       case ACTION_RESET_PRODUCT:
         return {...state, products: action.payload };
@@ -44,6 +77,12 @@ const productReducer = (state = INITIAL_STATE, action) => {
                 let viewIndex = deleteProducts.findIndex(x => x.key == `View_${action.payload}`)
                 deleteProducts.splice(viewIndex, 1)
                 return {...state, products: deleteProducts };
+        case ACTION_SET_CURRENT_PRODUCT: 
+            let product = action.payload // Nota> Redux no funciona correctamente si usas el mismo campo products, sino que lo recomendado es que copies el arreglo o el valor y luego lo devuelvas. Por eso la variable currentProducts
+            return {...state, currentProduct: product };
+        case ACTION_GET_CURRENT_PRODUCT:
+            let currentProduct = action.payload 
+            return {...state, currentProduct: currentProduct };
 
       default:
         return state

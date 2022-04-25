@@ -4,6 +4,8 @@ import API_HOST from '../constants'
 class BaseApiService {
   constructor(controller) {
     this.controller = controller
+    this.currentProduct = null
+
   }
   
   async getAll(templateFn = null, config = null) {
@@ -33,6 +35,14 @@ class BaseApiService {
 
   async create(data, config = null) {
     return await axios.post(`${API_HOST}/api/${this.controller}`, data, config)
+  }
+  async setProduct(data) {
+    this.currentProduct = data
+    console.log('>>>>>>>>>>>>>>>>>>>>>>>')
+    console.log(this.currentProduct)
+  }
+  async getProduct() {
+    return this.currentProduct
   }
 
   async update(id, data, config = null) {
