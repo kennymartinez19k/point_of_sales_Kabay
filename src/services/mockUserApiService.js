@@ -48,6 +48,10 @@ class MockUserApiService  extends  MockApiService {
     this.listed.push(data)
     return true;
   }
+
+  async me() {
+    return localStorage.getItem("userInfo") ?? this.listed[0]
+  }
 }
 
 export default MockUserApiService

@@ -24,6 +24,10 @@ class UserApiService extends BaseApiService {
     }
     alert(response.message)
   }
+
+  async me() {
+    return localStorage.getItem("userInfo")
+  }
   
 }
 
