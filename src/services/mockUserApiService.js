@@ -1,32 +1,9 @@
 import MockApiService from "./mockApiService";
 
 class MockUserApiService  extends  MockApiService {
-  constructor(controller) {
+  constructor(controller, initialData = []) {
     super(controller)
-    this.listed = [
-      {
-        id: 1,
-        shopName: "Wisl",
-        shopContactNumber: "",
-        shopContactEmail: "string",
-        shopContactAddress: "string",
-        currencySymbol: "string",
-        shopTaxInPercentage: 0,
-        user: "wilson1",
-        password: "12345"
-      },
-      {
-        id: 2,
-        shopName: "Wisl",
-        shopContactNumber: "",
-        shopContactEmail: "string",
-        shopContactAddress: "string",
-        currencySymbol: "string",
-        shopTaxInPercentage: 0,
-        user: "wilson2",
-        password: "4567"
-      }
-    ]
+    this.listed = initialData
     this.counter = 1
   }
   async login(username, password) {
