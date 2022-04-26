@@ -1,17 +1,14 @@
-import axios from 'axios'
-import API_HOST from '../constants'
-
 class MockApiService {
   constructor(controller) {
     this.controller = controller
-    this.products = [],
+    this.listed = []
     this.counter = 1
   }
   async getAll(templateFn = null, config = null) {
     
     let listed = []
-    for (let index = 0; index < this.products.length; index++) {
-      const element = this.products[index];
+    for (let index = 0; index < this.listed.length; index++) {
+      const element = this.listed[index];
       if (templateFn) listed.push(templateFn(element))
       else listed.push(element)
     }
@@ -19,28 +16,28 @@ class MockApiService {
   }
 
   async get(id, templateFn = null, config = null) {
-    let product =  this.products.find(x => x.id == id)
-    if (templateFn) return templateFn(product)
-    else return product
+    let item =  this.listed.find(x => x.id == id)
+    if (templateFn) return templateFn(item)
+    else return item
   }
 
   async create(data, config = null) {
     data.id = this.counter
     this.counter += 1
-    this.products.push(data)
+    this.listed.push(data)
   }
 
  
   async update(id, data, config = null) {
-    let productIndex = this.products.findIndex(x => x.id == id)
-    if (productIndex > -1) {
-        this.products[productIndex] = data
+    let itemIndex = this.listed.findIndex(x => x.id == id)
+    if (itemIndex > -1) {
+        this.listed[itemIndex] = data
     }
   }
 
   async delete(id, config = null) {
-    let productIndex = this.products.findIndex(x => x.id == id)
-    this.products.splice(productIndex, 1)
+    let itemIndex = this.listed.findIndex(x => x.id == id)
+    this.listed.splice(itemIndex, 1)
   }
 }
 
