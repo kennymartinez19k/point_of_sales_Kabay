@@ -1,7 +1,7 @@
 class MockApiService {
-  constructor(controller) {
+  constructor(controller, initialData = []) {
     this.controller = controller
-    this.listed = []
+    this.listed = initialData
     this.counter = 1
   }
   async getAll(templateFn = null, config = null) {

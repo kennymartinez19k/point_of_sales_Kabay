@@ -1,9 +1,9 @@
 import MockApiService from "./mockApiService";
 
 class MockUserApiService  extends  MockApiService {
-  constructor(controller, initialData = []) {
+  constructor(controller) {
     super(controller)
-    this.listed = initialData
+    this.listed = []
     this.counter = 1
   }
   async login(username, password) {
