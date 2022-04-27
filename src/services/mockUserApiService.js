@@ -3,27 +3,35 @@ import MockApiService from "./mockApiService";
 class MockUserApiService  extends  MockApiService {
   constructor(controller) {
     super(controller)
-    this.listed = []
+    this.companies = []
     this.counter = 1
   }
   async login(username, password) {
     let user = this.listed.find(x => x.username == username && x.password == password)
     if (user) {
       localStorage.setItem("userInfo", JSON.stringify(user))
-      return true
+      let company = this.companies.find(x => x.id == user.id)
+      return {user, company}
     }
     alert ("Ese usuario no existe")
-    return false
+    return;
   }
 
   async register(data) {
-    let user = this.listed.find(x => x.username == data.username)
-    if (user) {
+    let userExists = this.listed.find(x => x.username == data.username)
+    if (userExists) {
       alert("Este usuario existe")
-      return;
+      return false;
     }
-    this.listed.push(data)
-    return true;
+    data["id"] = this.counter
+    let newUser = {username: data.username, password: data.password, id: data.id}
+    this.listed.push(newUser)
+    delete data.username
+    delete data.password
+    this.companies.push(data)
+    this.counter += 1
+
+    return true
   }
 
   async me() {
