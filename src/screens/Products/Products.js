@@ -1,50 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-native';
 import img from '../../../assets/image.png'
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView, ScrollView } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import { setCurrentProduct } from '../../actions/productAction';
-
-
-
-const listProducts = [
-    {
-        name: "Chocolates",
-        price: "20$",
-        addToCart: false
-    },
-    {
-        name: "Fresas",
-        price: "20$",
-        img: '../../../assets/image.png',
-        addToCart: false
-    },
-    {
-        name: "Azucar",
-        price: "20$",
-        img: '../../../assets/image.png',
-        addToCart: false
-    },
-    {
-        name: "Leche",
-        price: "20$",
-        img: '../../../assets/image.png',
-        addToCart: false
-    },
-    {
-        name: "Cafe",
-        price: "20$",
-        img: '../../../assets/image.png',
-        addToCart: false
-    }
-]
-
+import { setCurrentProduct, getProducts } from '../../actions/productAction';
 
 export const Products = ({navigation}) => {
   const dispatch = useDispatch();
 
-  
+  useEffect(() => {
+    dispatch(getProducts())
+  }, [])
+
+  const data = useSelector(state => state);
+
  function setProduct(prod) {
     dispatch(setCurrentProduct(prod))
     navigation.navigate('ProductDetails', prod)
@@ -53,7 +23,7 @@ export const Products = ({navigation}) => {
   return (
         <ScrollView style={styles.container} >
             <View style={styles.list_items}>
-                {listProducts.map((prod, idx) => (
+                {data.product.products.map((prod, idx) => (
                     <Pressable  key={idx + prod.name} onPress={() => setProduct(prod)} style={styles.item}>
                         <Image style={styles.prod_img} source={img}/>
                         <Text style={styles.title_item}>{prod.name}</Text>
@@ -64,7 +34,6 @@ export const Products = ({navigation}) => {
                             color="#000"
                             />
                     </Pressable>
-
                 ))}
             </View>
         </ScrollView>       

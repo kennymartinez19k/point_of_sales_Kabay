@@ -38,8 +38,6 @@ class BaseApiService {
   }
   async setProduct(data) {
     this.currentProduct = data
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log(this.currentProduct)
   }
   async getProduct() {
     return this.currentProduct

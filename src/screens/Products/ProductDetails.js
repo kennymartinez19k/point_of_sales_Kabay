@@ -24,6 +24,7 @@ export const ProductDetails = () => {
   const dispatch = useDispatch();
   
   const data = useSelector(state => state);
+
   const route = useRoute()
   return (
       <View style={styles.container}>
@@ -41,7 +42,7 @@ export const ProductDetails = () => {
           <View style={styles.options_cart}>
             <Text style={styles.opt_title}>Agregue al Carrito Ahora</Text>
              {
-               data?.product?.currentProduct?.addToCart ?
+               data.product.currentProduct?.addToCart ?
                <Ionicons
                 name='cart'
                 size={22}
@@ -57,8 +58,8 @@ export const ProductDetails = () => {
 
              }
           </View>
-          <Text style={styles.title}>{data?.product?.currentProduct?.name}</Text>
-          <Text style={styles.subtitle}>{data?.product?.currentProduct?.price}</Text>
+          <Text style={styles.title}>{data.product.currentProduct.name}</Text>
+          <Text style={styles.subtitle}>{data.product.currentProduct.price}</Text>
           <Text style={styles.subtitle}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
           <View style={styles.btn}>
             <Button

@@ -2,14 +2,14 @@ class MockApiService {
   constructor(controller, initialData = []) {
     this.controller = controller
     this.listed = initialData
-    this.counter = 1
+    this.counter = initialData.length + 1
   }
   async getAll(templateFn = null, config = null) {
     
     let listed = []
     for (let index = 0; index < this.listed.length; index++) {
       const element = this.listed[index];
-      if (templateFn) listed.push(templateFn(element))
+      if (templateFn) listed.push(templateFn(element, index))
       else listed.push(element)
     }
     return listed
@@ -25,6 +25,7 @@ class MockApiService {
     data.id = this.counter
     this.counter += 1
     this.listed.push(data)
+    return {data: data.id}
   }
 
  
@@ -33,6 +34,7 @@ class MockApiService {
     if (itemIndex > -1) {
         this.listed[itemIndex] = data
     }
+    return itemIndex
   }
 
   async delete(id, config = null) {

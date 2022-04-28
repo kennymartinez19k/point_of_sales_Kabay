@@ -44,7 +44,6 @@ export const deleteProduct = (id, index, config = null) => {
 };
 export const setCurrentProduct = (product) => {
     return async dispatch => {
-        await services.product.setProduct(product)
         dispatch({type:  ACTION_SET_CURRENT_PRODUCT , payload: product})
     }
 };

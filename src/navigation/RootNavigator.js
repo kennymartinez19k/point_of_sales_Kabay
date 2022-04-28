@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
-
+import { FontAwesome } from '@expo/vector-icons'; 
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import Login from '../screens/LoginScreen'
@@ -14,8 +14,12 @@ import {ProofScreen} from '../screens/ProofScreen'
 
 import {Products} from '../screens/Products/Products'
 import { ProductDetails} from '../screens/Products/ProductDetails'
-
-
+import { ProductsList } from '../screens/Posts/ProductsList'
+import { FieldDetailsProduct} from '../screens/Posts/FieldsDetailsProd'
+import { Expensive } from '../screens/Expensive/Expensive';
+import { ExpensiveDetails} from '../screens/Expensive/Details'
+import { CreateExpensive} from '../screens/Expensive/CreateExpensive'
+import { CreateProduct } from '../screens/Posts/CreateProducts';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,7 +38,7 @@ function Home() {
               color={color}
             />
           );
-        } else if (route.name === 'Settings') {
+        } else if (route.name === 'ProductsList') {
           return (
             <Ionicons
               name='ios-list'
@@ -51,6 +55,11 @@ function Home() {
             />
           );
         }
+        else if (route.name === 'Expensive') {
+          return (
+            <FontAwesome name="dollar" size={24} color={color} />
+          );
+        }
       },
       tabBarInactiveTintColor: 'gray',
       tabBarActiveTintColor: 'tomato',
@@ -58,7 +67,8 @@ function Home() {
     >
       <Tab.Group screenOptions={{ headerTitleAlign:"center", headerStyle: {backgroundColor: '#fff'}, headerTintColor: '#333'}}>
         <Tab.Screen options={{ title: t('navigate:home')}}  name="Main" component={Products} />
-        {/* <Tab.Screen options={{ title: t('navigate:settings')}} name="Settings" component={SettingsScreen} /> */}
+        <Tab.Screen options={{ title: 'Productos'}} name="ProductsList" component={ProductsList} />
+        <Tab.Screen options={{title: 'Gastos'}} name="Expensive" component={Expensive}  />
         <Tab.Screen options={{ title: t('navigate:profile'), headerShown: false }} name="Profile" component={ProfileScreen} />
       </Tab.Group>
     </Tab.Navigator>
@@ -95,6 +105,35 @@ export default function RootNavigator() {
         component={SettingsScreen}
         options={{title: 'Configuraciones'}}
       />
+      <Stack.Screen
+        name="ProductsList"
+        component={ProductsList}
+        options={{title: 'Productos'}}
+      />
+      <Stack.Screen
+        name="FieldDetailsProduct"
+        component={FieldDetailsProduct}
+        options={{title: 'Detalles del Producto'}}
+      />
+      <Stack.Screen
+        name="ExpensiveDetails"
+        component={ExpensiveDetails}
+        options={{title: 'Detalles del Gasto'}}
+      />
+       <Stack.Screen
+        options={{title: 'Gastos'}} name="Expensive" component={Expensive}  
+      />
+      <Stack.Screen
+        name="CreateExpensive"
+        component={CreateExpensive}
+        options={{title: 'Crear Gasto'}}
+      />
+       <Stack.Screen
+        name="CreateProduct"
+        component={CreateProduct}
+        options={{title: 'Crear Producto'}}
+      />
+    
     </Stack.Navigator>
   </NavigationContainer>
   );
