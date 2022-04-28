@@ -64,7 +64,7 @@ export const CreateExpensive = ({navigation}) => {
                 </View>
             </View>
             <View style={styles.btn_container}>
-                <Button onPress={() => sendInfo(data.expensive.currentExpensive, navigation)} title="Crear"/>
+                <Button onPress={() => sendInfo(data.expensive.currentExpensive)} title="Crear"/>
             </View>
         </ScrollView>       
   )

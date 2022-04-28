@@ -22,6 +22,7 @@ class MockApiService {
   }
 
   async create(data, config = null) {
+    console.log(data)
     data.id = this.counter
     this.counter += 1
     this.listed.push(data)

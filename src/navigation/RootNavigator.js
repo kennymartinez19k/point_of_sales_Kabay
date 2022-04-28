@@ -16,9 +16,9 @@ import {Products} from '../screens/Products/Products'
 import { ProductDetails} from '../screens/Products/ProductDetails'
 import { ProductsList } from '../screens/Posts/ProductsList'
 import { FieldDetailsProduct} from '../screens/Posts/FieldsDetailsProd'
-import { Expensive } from '../screens/Expensive/Expensive';
-import { ExpensiveDetails} from '../screens/Expensive/Details'
-import { CreateExpensive} from '../screens/Expensive/CreateExpensive'
+import { Expensive } from '../screens/Expensive/ExpensiveScreen';
+import { ExpensiveDetails} from '../screens/Expensive/DetailsScreen'
+import { CreateExpensive} from '../screens/Expensive/CreateExpensiveScreen'
 import { CreateProduct } from '../screens/Posts/CreateProducts';
 
 const Tab = createBottomTabNavigator();
