@@ -1,4 +1,4 @@
-export default API_HOST = "https://e9d5-152-0-27-54.ngrok.io" ;
+export default API_HOST = "http://9523-186-7-111-195.ngrok.io" ;
 export const ACTION_GET_PRODUCTS = "GET_PRODUCTS"
 export const ACTION_GET_PRODUCT = "GET_PRODUCT"
 export const ACTION_INSERT_PRODUCT = "INSERT_PRODUCT"

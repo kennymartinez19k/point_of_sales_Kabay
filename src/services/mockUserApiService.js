@@ -3,8 +3,6 @@ import MockApiService from "./mockApiService";
 class MockUserApiService  extends  MockApiService {
   constructor(controller) {
     super(controller)
-    this.listed = []
-    this.counter = 1
   }
   async login(username, password) {
     let user = this.listed.find(x => x.username == username && x.password == password)
