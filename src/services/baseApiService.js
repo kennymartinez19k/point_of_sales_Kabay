@@ -9,6 +9,7 @@ class BaseApiService {
   }
   
   async getAll(templateFn = null, config = null) {
+    console.log(`${API_HOST}/api/${this.controller}`)
     let response =  await axios.get(`${API_HOST}/api/${this.controller}`, config)
     if (response.status == 404) {
       alert("Error no se pudo conectar con el backend")
@@ -34,6 +35,7 @@ class BaseApiService {
   }
 
   async create(data, config = null) {
+    console.log(data, 'Im the data')
     return await axios.post(`${API_HOST}/api/${this.controller}`, data, config)
   }
   async setProduct(data) {

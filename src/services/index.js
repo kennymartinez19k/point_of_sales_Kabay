@@ -10,8 +10,7 @@ const services = {
     product: new MockApiService("product", productDummy ),
     user: new MockUserApiService("user"),
     company: new MockApiService("company", companyDummy),
-    expensive: new BaseApiService("expensive"),
-    postProducts: new MockApiService("expensive", postDummy),
+    expensive: new BaseApiService("expense"),
 }
 
 export default services
