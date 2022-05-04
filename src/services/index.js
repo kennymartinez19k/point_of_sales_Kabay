@@ -4,13 +4,13 @@ import expensiveDummy from './dataDummies/expensiveDummie'
 import postDummy from './dataDummies/postDummie'
 import MockApiService from './mockApiService'
 import MockUserApiService from './mockUserApiService'
-import UserApiService from './userApiService'
-// import BaseApiService from './baseApiService'
+// import UserApiService from './userApiService'
+import BaseApiService from './baseApiService'
 const services = {
     product: new MockApiService("product", productDummy ),
     user: new MockUserApiService("user"),
     company: new MockApiService("company", companyDummy),
-    expensive: new MockApiService("expensive", expensiveDummy),
+    expensive: new BaseApiService("expensive"),
     postProducts: new MockApiService("expensive", postDummy),
 }
 

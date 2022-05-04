@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Image , Pressable, Platform} from 'react-native';
+import { StyleSheet, Text, View, TextInput , Pressable, Platform} from 'react-native';
 import {ScrollView } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import { changeNameExpensive, setCurrentExpensive, updateExpensive } from '../../actions/expensiveAction';
+import { changeNameExpensive, updateExpensive } from '../../actions/expensiveAction';
 import { useRoute } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker'
 
@@ -11,15 +11,12 @@ export const ExpensiveDetails = ({navigation}) => {
   const [date, setDate] = useState(new Date())
   const [mode, setMode] = useState('date')
   const [show, setShow] = useState(false)
-  const [text, setText] = useState('Empty')
   const [datePicker, setDatePicker] = useState('DD-MM-YYYY')
   const [timePicker, setTimePicker] = useState('HH:MM')
 
 
   const onChange = (event, selectedDate, pastDate) => {
-    // if(pastDate){
-    //   let pastDate = new Date()
-    // }
+  
     console.log(selectedDate)
     const currentDate = selectedDate || date
     setShow(Platform.OS === "ios")
@@ -28,7 +25,6 @@ export const ExpensiveDetails = ({navigation}) => {
     let tempDate = new Date(currentDate)
     let fDate = tempDate.getDate() + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
     let fTime = tempDate.getHours() + ":" + tempDate.getMinutes();
-    setText(fDate + "\n" + fTime)
     setDatePicker(fDate)
     setTimePicker(fTime)
     console.log(fDate + " (" + fTime + ")")
@@ -38,12 +34,6 @@ export const ExpensiveDetails = ({navigation}) => {
     setShow(true)
     setMode(currentMode)
   }
-
-
-
-
-
-
 
  const dispatch = useDispatch();
  const route = useRoute()
