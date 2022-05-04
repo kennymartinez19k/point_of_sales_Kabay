@@ -1,94 +1,47 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Image , Pressable, TouchableHighlight, Animated} from 'react-native';
-import { ScrollView, Linking } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import { setCurrentExpensive, getExpensive, resetExpensive, deleteExpensive, setExpensiveForDisplay } from '../../actions/expensiveAction';
-import budget from '../../../assets/budget.png'
-import { FAB } from 'react-native-paper';
-import { Ionicons } from '@expo/vector-icons';
-
+import { TemplateItem } from '../../components/TemplateItems'
 
 export const Expensive = ({navigation}) => {
-    const [expensiveDelete, setExpensiveDelete] = useState(null)
-
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getExpensive())
     }, [] )
     const data = useSelector(state => state);
-    const [searchInput, setSearchInput] = useState("")
 
-    console.log(Object.keys(data.expensive.expensiveForDisplay))
-
-    const createExpensive = () => {
-        dispatch(resetExpensive())
-        navigation.navigate("CreateExpensive")
-    }
-
-    function setterCurrentExpensive(prod, idx) {
-        dispatch(setCurrentExpensive(prod , idx))
-        navigation.navigate('ExpensiveDetails', idx)
-    }
-
-    function focusDelete(val){
-        setExpensiveDelete(val)
-    }
-    function expensiveForDelete (id) {
-        dispatch(deleteExpensive(id))
-    }
-    function searchExpensive(text){
-        setSearchInput(text)
+    const listText = (prod = {}) => {
+        return(
+            <>
+                <Text style={styles.title_item}>{prod.name}</Text>
+                <Text style={styles.info_item}>{prod.amount}</Text>
+                <Text style={styles.info_item}>{prod.note} </Text>
+                <Text style={styles.info_item}>{prod.date}</Text>
+            </>
+        )
     }
 
   return (
-        <View style={styles.container} >
-            <ScrollView  showsVerticalScrollIndicator={false}>
-                <View style={styles.list_items} >
-                    <TextInput
-                    style={styles.TextInput}
-                    placeholder="Buscar Gasto"
-                    onChangeText={text => dispatch(setExpensiveForDisplay(text))} value={data.expensive.searchExpensive}
-                    />
-                    {data.expensive.expensiveForDisplay.map((prod, idx) => (
-                     <TouchableHighlight   key={"view_" + prod.id}  style={styles.item_touchable}>
-                        <View style={styles.container_item}>
-                            {
-                                prod?.id == expensiveDelete ?
-                                <View style={styles.opt_item}>
-                                    <Ionicons onPress={() => focusDelete(null)} name="close-circle-sharp" size={22} color="#a20505" />
-                                    <Ionicons onPress={() => expensiveForDelete(prod.id)} name="trash" size={22} color="#a20505" />
-
-                                </View>
-                                :
-                                <View></View>
-                            }
-                            <Pressable  style={styles.item}  underlayColor="white" onPress={() => setterCurrentExpensive(prod, idx)}  onLongPress={() => focusDelete(prod.id)}>
-                                <View style={styles.item_info}>
-                                    <Text style={styles.title_item}>{prod?.name}</Text>
-                                    <Text style={styles.info_item}>{prod?.amount}</Text>
-                                    <Text style={styles.info_item}>{prod?.date} {prod?.hour}</Text>
-                                    <Text style={styles.info_item}>{prod?.note}</Text>
-                                </View>
-                                <View style={styles.item_img}>
-                                    <Image style={styles.prod_img} source={budget}/>
-                                </View>
-                            </Pressable>
-                        </View>
-                     </TouchableHighlight>
-                    )) 
-                    }
-                </View>
-            </ScrollView>
-
-            <FAB
-                style={styles.fab}
-                small
-                icon="plus"
-                color='white'
-                onPress={() => createExpensive()}
-            />
-        </View>       
+        <TemplateItem 
+            data={{
+                item: data.expensive.expensiveForDisplay,
+                searchItem: data.expensive.searchExpensive,
+            }}
+            listText={listText}
+            methods={{
+                resetCurrentItem: resetExpensive,
+                setCurrentItem: setCurrentExpensive,
+                deleteItem: deleteExpensive,
+                setItemForDisplay: setExpensiveForDisplay
+            }}
+            routes={{
+                createItem: "CreateExpensive",
+                details: "ExpensiveDetails"
+            }}
+            navigation={navigation}
+        />      
   )
 }
 

@@ -43,7 +43,7 @@ export const CreateProduct = ({navigation}) => {
                     style={styles.TextInput}
                     placeholder="Precio"
                     value={expensive.price}
-
+                    keyboardType='numeric'
                   />
                 </View>
                 <View style={styles.item}>

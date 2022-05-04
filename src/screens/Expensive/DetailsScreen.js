@@ -1,12 +1,50 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Image , Pressable, Platform} from 'react-native';
 import {ScrollView } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import { changeNameExpensive, setCurrentExpensive, updateExpensive } from '../../actions/expensiveAction';
 import { useRoute } from '@react-navigation/native';
-
+import DateTimePicker from '@react-native-community/datetimepicker'
 
 export const ExpensiveDetails = ({navigation}) => {
+
+  const [date, setDate] = useState(new Date())
+  const [mode, setMode] = useState('date')
+  const [show, setShow] = useState(false)
+  const [text, setText] = useState('Empty')
+  const [datePicker, setDatePicker] = useState('DD-MM-YYYY')
+  const [timePicker, setTimePicker] = useState('HH:MM')
+
+
+  const onChange = (event, selectedDate, pastDate) => {
+    // if(pastDate){
+    //   let pastDate = new Date()
+    // }
+    console.log(selectedDate)
+    const currentDate = selectedDate || date
+    setShow(Platform.OS === "ios")
+    setDate(currentDate)
+
+    let tempDate = new Date(currentDate)
+    let fDate = tempDate.getDate() + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
+    let fTime = tempDate.getHours() + ":" + tempDate.getMinutes();
+    setText(fDate + "\n" + fTime)
+    setDatePicker(fDate)
+    setTimePicker(fTime)
+    console.log(fDate + " (" + fTime + ")")
+  }
+
+  const showMode = (currentMode) => {
+    setShow(true)
+    setMode(currentMode)
+  }
+
+
+
+
+
+
+
  const dispatch = useDispatch();
  const route = useRoute()
  const data = useSelector(state => state);
@@ -26,33 +64,9 @@ export const ExpensiveDetails = ({navigation}) => {
     navigation.goBack()
     setEditValue(false)
   }
-
-//   const ItemTemplateFn = (prod, idx) => {
-//     function setExpensive(product, idx) {
-//       dispatch(setCurrentExpensive(product , idx))
-//       navigation.navigate('ExpensiveDetails')
-//     }
-
-//     return (
-//        <Pressable  key={"view_" + prod.id} onPress={() => setExpensive(prod)} style={stylesTemplate.item}>
-//            <View>
-//                <Text style={stylesTemplate.title_item}>{prod.name}</Text>
-//                <Text style={stylesTemplate.info_item}>{prod.amount}</Text>
-//                <Text style={stylesTemplate.info_item}>{prod.date} {prod.hour}</Text>
-//                <Text style={stylesTemplate.info_item}>{prod.note}</Text>
-//            </View>
-//            <View style={stylesTemplate.item_img}>
-//                <Image style={stylesTemplate.prod_img} source={budget}/>
-//            </View>
-//        </Pressable>
-//     )
-// }
-
-// function setExpensive(prod) {
-//   dispatch(setCurrentExpensive(prod ))
-//   navigation.navigate('ExpensiveDetails')
-// }
-  
+  const setEdit = () => {
+    setEditValue(true)
+  }
 
   return (
         <ScrollView style={styles.container} >
@@ -76,7 +90,7 @@ export const ExpensiveDetails = ({navigation}) => {
                     value={data?.expensive.currentExpensive.amount}
                     editable={editValue}
                     onChangeText={text => dispatch(changeNameExpensive("amount", text)) }
-
+                    keyboardType='numeric'
 
                   />
                 </View>
@@ -92,24 +106,56 @@ export const ExpensiveDetails = ({navigation}) => {
                     editable={editValue}
                     onChangeText={text => dispatch(changeNameExpensive("note", text)) }
 
-
                   />
                 </View>
                 <View style={styles.item}>
-                  <Text style={styles.info_title}>Fecha</Text>
-                  <TextInput
-                    style={styles.TextInput}
-                    placeholder="Fecha de Gastos"
-                    value={data?.expensive.currentExpensive.date}
-                    editable={editValue}
-                    onChangeText={text => dispatch(changeNameExpensive("date", text)) }
+                  <View style={{flexDirection: 'row', justifyContent: "space-between"}}>
+                    {
+                      editValue ? 
+                      <>
+                        <View style={{width: "46%"}}>
+                          <Pressable onPress={() => showMode("date")}>
+                            <Text style={styles.info_title}>Fecha</Text>
+                            <Text style={styles.TextInput} placeholder='DD-MM-YYYY'>{datePicker}</Text>
+                          </Pressable>
+                        </View>
+                        <View style={{width: "45%"}}>
+                          <Pressable onPress={() => showMode("time")}>
+                            <Text style={styles.info_title}>Hora</Text>
 
+                            <Text style={styles.TextInput} placeholder='HH:MM'>{timePicker}</Text>
+                          </Pressable>
+                        </View>
+                      </>
+                      :
+                      <TextInput
+                        style={styles.TextInput}
+                        placeholder="Fecha de Gastos"
+                        value={data?.expensive.currentExpensive.date}
+                        editable={editValue}
+                        onChangeText={text => dispatch(changeNameExpensive("date", text)) }
+                      />
+                    }
+                  </View>
+                  {show && (
+                    <DateTimePicker
+                      testID='dateTimePicker'
+                      value={date}
+                      mode={mode}
+                      is24Hour={true}
+                      display="default"
+                      onChange={onChange}
+                    
+                    />
+                  )
 
-                  />
+                  }
+
+                  
                 </View>
             </View>
             <View style={styles.btn_container}>
-                <Button onPress={() => setEditValue(true)} disabled={editValue} title="Editar"/>
+                <Button onPress={() => setEdit(true)} disabled={editValue} title="Editar"/>
                 <Button onPress={() => saveInfo(data?.expensive.currentExpensive)} disabled={!editValue}  title="Guardar"/>
             </View>
         </ScrollView>       
@@ -238,7 +284,11 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       color: '#fff'
   },
-
+  
+  datePickerStyle: {
+    width: 170,
+    marginTop: 10,
+  },
     
 
 })
