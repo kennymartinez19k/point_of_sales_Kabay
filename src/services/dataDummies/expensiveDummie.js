@@ -23,10 +23,10 @@ let expensiveDummy =[
     },
     {
         id:4,
-        name: "Compra de Mercancia",
-        amount: "RD$1000",
-        note: 'Compra',
-        date: '2022-08-30',
+        name: "Compra de Mercancia A",
+        amount: "RD$2000",
+        note: 'Compraa',
+        date: '2021-08-30',
       
     },  
  

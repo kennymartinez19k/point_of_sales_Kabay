@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { StyleSheet, Text, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentExpensive, getExpensive, resetExpensive, deleteExpensive, setExpensiveForDisplay } from '../../actions/expensiveAction';
 import { TemplateItem } from '../../components/TemplateItems'
 
-export const Expensive = ({navigation}) => {
+export const Expensive = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getExpensive())
-    }, [] )
+    }, [])
     const data = useSelector(state => state);
 
     const listText = (prod = {}) => {
-        return(
+        return (
             <>
                 <Text style={styles.title_item}>{prod.name}</Text>
                 <Text style={styles.info_item}>{prod.amount}</Text>
@@ -23,8 +23,8 @@ export const Expensive = ({navigation}) => {
         )
     }
 
-  return (
-        <TemplateItem 
+    return (
+        <TemplateItem
             data={{
                 item: data.expensive.expensiveForDisplay,
                 searchItem: data.expensive.searchExpensive,
@@ -41,17 +41,17 @@ export const Expensive = ({navigation}) => {
                 details: "ExpensiveDetails"
             }}
             navigation={navigation}
-        />      
-  )
+        />
+    )
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         padding: 10,
         width: '100%',
         height: '100%',
     },
-    item_touchable:{
+    item_touchable: {
         width: '98%',
         marginTop: 10,
         marginLeft: 5,
@@ -65,12 +65,12 @@ const styles = StyleSheet.create({
         shadowRadius: 1.41,
         elevation: 2,
     },
-    container_item:{
+    container_item: {
         backgroundColor: "#fff",
         padding: 12,
 
     },
-    item:{
+    item: {
         width: '100%',
         zIndex: 0,
         display: 'flex',
@@ -93,25 +93,25 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-end'
     },
-    item_info:{
+    item_info: {
         maxWidth: '60%'
     },
-    prod_img:{
+    prod_img: {
         width: '70%',
         height: '80%'
     },
-    title_item:{
+    title_item: {
         fontSize: 16,
         width: '100%',
         fontWeight: 'bold',
         color: '#333',
     },
-    info_item:{
+    info_item: {
         color: '#666',
         fontSize: 12,
         marginTop: 2
     },
-    TextInput:{
+    TextInput: {
         backgroundColor: '#fff',
         width: '100%',
         padding: 10,
@@ -140,11 +140,11 @@ const styles = StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center'
-      },
-      opt_item:{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginBottom: 10,
-          width: '100%',
-      }
+    },
+    opt_item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 10,
+        width: '100%',
+    }
 })

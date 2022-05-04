@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Image , Pressable, Platform} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Platform} from 'react-native';
 import {ScrollView } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import { changeNameExpensive, setCurrentExpensive, updateExpensive } from '../../actions/expensiveAction';
-import { useRoute } from '@react-navigation/native';
+import { changeNameExpensive, updateExpensive } from '../../actions/expensiveAction';
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 export const ExpensiveDetails = ({navigation}) => {
@@ -11,16 +10,11 @@ export const ExpensiveDetails = ({navigation}) => {
   const [date, setDate] = useState(new Date())
   const [mode, setMode] = useState('date')
   const [show, setShow] = useState(false)
-  const [text, setText] = useState('Empty')
   const [datePicker, setDatePicker] = useState('DD-MM-YYYY')
   const [timePicker, setTimePicker] = useState('HH:MM')
 
 
   const onChange = (event, selectedDate, pastDate) => {
-    // if(pastDate){
-    //   let pastDate = new Date()
-    // }
-    console.log(selectedDate)
     const currentDate = selectedDate || date
     setShow(Platform.OS === "ios")
     setDate(currentDate)
@@ -28,10 +22,8 @@ export const ExpensiveDetails = ({navigation}) => {
     let tempDate = new Date(currentDate)
     let fDate = tempDate.getDate() + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
     let fTime = tempDate.getHours() + ":" + tempDate.getMinutes();
-    setText(fDate + "\n" + fTime)
     setDatePicker(fDate)
     setTimePicker(fTime)
-    console.log(fDate + " (" + fTime + ")")
   }
 
   const showMode = (currentMode) => {
@@ -40,13 +32,7 @@ export const ExpensiveDetails = ({navigation}) => {
   }
 
 
-
-
-
-
-
  const dispatch = useDispatch();
- const route = useRoute()
  const data = useSelector(state => state);
  const [editValue, setEditValue] = useState(false)
 
@@ -161,57 +147,6 @@ export const ExpensiveDetails = ({navigation}) => {
         </ScrollView>       
   )
 }
-
-const stylesTemplate = StyleSheet.create({
-  item:{
-    width: '98%',
-    height: 105,
-    zIndex: 0,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
-    marginTop: 15,
-    marginLeft: 5,
-    marginRight: 5,
-    backgroundColor: '#fff',
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 1,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
-
-    elevation: 2,
-
-},
-  item_img: {
-      width: '30%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center'
-  },
-  prod_img:{
-      width: '70%',
-      height: '80%'
-  },
-  title_item:{
-      fontSize: 16,
-      width: '100%',
-      fontWeight: 'bold',
-      color: '#333',
-      marginLeft: 5,
-      marginRight: 5
-  },
-  info_item:{
-      color: '#666',
-      fontSize: 12,
-      marginLeft: 5,
-      marginRight: 5,
-      marginTop: 2
-  },
-})
 
 const styles = StyleSheet.create({
     container:{
