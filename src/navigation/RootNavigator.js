@@ -20,6 +20,9 @@ import { Expensive } from '../screens/Expensive/ExpensiveScreen';
 import { ExpensiveDetails} from '../screens/Expensive/DetailsScreen'
 import { CreateExpensive} from '../screens/Expensive/CreateExpensiveScreen'
 import { CreateProduct } from '../screens/Posts/CreateProducts';
+import { Provider } from '../screens/Providers/ProvidersScreen';
+import { CreateProvider } from '../screens/Providers/CreateProviderScreen';
+import { ProviderDetails } from '../screens/Providers/DetailsScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -60,6 +63,11 @@ function Home() {
             <FontAwesome name="dollar" size={24} color={color} />
           );
         }
+        else if (route.name === 'Provider') {
+          return (
+            <FontAwesome name="dollar" size={24} color={color} />
+          );
+        }
       },
       tabBarInactiveTintColor: 'gray',
       tabBarActiveTintColor: 'tomato',
@@ -69,6 +77,7 @@ function Home() {
         <Tab.Screen options={{ title: t('navigate:home')}}  name="Main" component={Products} />
         <Tab.Screen options={{ title: 'Productos'}} name="ProductsList" component={ProductsList} />
         <Tab.Screen options={{title: 'Gastos'}} name="Expensive" component={Expensive}  />
+        <Tab.Screen options={{ title: 'Proveedor'}} name="Provider" component={Provider} />
         <Tab.Screen options={{ title: t('navigate:profile'), headerShown: false }} name="Profile" component={ProfileScreen} />
       </Tab.Group>
     </Tab.Navigator>
@@ -132,6 +141,16 @@ export default function RootNavigator() {
         name="CreateProduct"
         component={CreateProduct}
         options={{title: 'Crear Producto'}}
+      />
+      <Stack.Screen
+        name="CreateProvider"
+        component={CreateProvider}
+        options={{title: 'Crear Proveedor'}}
+      />
+      <Stack.Screen
+        name="ProviderDetails"
+        component={ProviderDetails}
+        options={{title: 'Detalles del Proveedor'}}
       />
     
     </Stack.Navigator>

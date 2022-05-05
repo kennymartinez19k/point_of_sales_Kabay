@@ -1,5 +1,5 @@
 import services from '../services';
-import { ACTION_ADD_USER, ACTION_CHANGE_PASSWORD, ACTION_CHANGE_USER} from '../constants'
+import { ACTION_ADD_USER, ACTION_CHANGE_PASSWORD, ACTION_CHANGE_USER, ACTION_SET_USER} from '../constants'
 
 export function addUser() {
     // Lo que sea que quiera hacer Aqui
@@ -23,3 +23,13 @@ export function changePassword(password) {
         payload: password
     }
 }
+
+export function setCurrentUser(user) {
+    // Lo que sea que quiera hacer Aqui
+    return {
+        type: ACTION_SET_USER,
+        payload: user
+    }
+}
+
+

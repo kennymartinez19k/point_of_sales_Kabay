@@ -21,6 +21,7 @@ class BaseApiService {
       if (templateFn) listed.push(templateFn(element, index))
       else listed.push(element)
     }
+    console.log(listed, 'hey soy listed')
     return listed
   }
 
@@ -50,6 +51,7 @@ class BaseApiService {
   }
 
   async delete(id, config = null) {
+    console.log("soy el id ", id,)
     return await axios.delete(`${API_HOST}/api/${this.controller}/${id}`, config)
   }
 }

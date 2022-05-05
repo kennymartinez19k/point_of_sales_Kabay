@@ -1,13 +1,16 @@
 import MockApiService from "./mockApiService";
+import {useDispatch, useSelector} from 'react-redux';
+import { setCurrentUser } from '../actions/userAction'
+
 
 class MockUserApiService  extends  MockApiService {
-  constructor(controller) {
-    super(controller)
+  constructor(controller, initialData) {
+    super(controller, initialData)
   }
-  async login(username, password) {
+  async login(username, password, dispatch) {
     let user = this.listed.find(x => x.username == username && x.password == password)
     if (user) {
-      localStorage.setItem("userInfo", JSON.stringify(user))
+      dispatch(setCurrentUser(user))
       return true
     }
     alert ("Ese usuario no existe")

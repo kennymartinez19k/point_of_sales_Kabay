@@ -1,8 +1,9 @@
-import { ACTION_ADD_USER, ACTION_CHANGE_PASSWORD, ACTION_CHANGE_USER } from '../constants'
+import { ACTION_ADD_USER, ACTION_CHANGE_PASSWORD, ACTION_CHANGE_USER, ACTION_SET_USER } from '../constants'
 const INITIAL_STATE = {
     users: ["hola", "adios"],
     username: "Emy Saul",
-    password: null
+    password: null,
+    currentUser: null
 };
  
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -17,6 +18,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
 
         case ACTION_CHANGE_PASSWORD:
             return {...state, password: action.payload}
+        case ACTION_SET_USER:
+            return {...state, currentUser: action.payload}
       default:
         return state
     }

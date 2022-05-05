@@ -2,10 +2,8 @@ import React, { useState } from 'react'
 import { StyleSheet, View, TextInput, Image, Pressable, TouchableHighlight } from 'react-native';
 import { ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
-import budget from '../../assets/budget.png'
 import { FAB } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
-
 
 export const TemplateItem = ({
     data,
@@ -13,6 +11,7 @@ export const TemplateItem = ({
     methods,
     routes,
     navigation,
+    images
 }) => {
     const [itemDelete, setItemDelete] = useState(null)
 
@@ -41,16 +40,16 @@ export const TemplateItem = ({
                 <View style={styles.list_items} >
                     <TextInput
                         style={styles.TextInput}
-                        placeholder="Buscar Gasto"
+                        placeholder={data.placeholderSearch}
                         onChangeText={text => dispatch(methods.setItemForDisplay(text))} value={data.searchItem}
                     />
                     {data.item.map((prod, idx) => (
-                        <TouchableHighlight key={"view_" + prod.id} style={styles.item_touchable}>
-                            <View style={styles.container_item}>
+                        <TouchableHighlight key={"View_" + prod.id} style={styles.item_touchable}>
+                            <View style={ styles.container_item }>
                                 {
                                     prod?.id == itemDelete ?
                                         <View style={styles.opt_item}>
-                                            <Ionicons onPress={() => focusDelete()} name="close-circle-sharp" size={22} color="#a20505" />
+                                            <Ionicons onPress={() => focusDelete()} name="close" size={22} color="#000" />
                                             <Ionicons onPress={() => itemForDelete(prod.id)} name="trash" size={22} color="#a20505" />
 
                                         </View>
@@ -62,7 +61,7 @@ export const TemplateItem = ({
                                         {listText(prod)}
                                     </View>
                                     <View style={styles.item_img}>
-                                        <Image style={styles.prod_img} source={budget} />
+                                        <Image style={styles.prod_img} source={images} />
                                     </View>
                                 </Pressable>
                             </View>
@@ -106,7 +105,6 @@ const styles = StyleSheet.create({
     container_item: {
         backgroundColor: "#fff",
         padding: 12,
-
     },
     item: {
         width: '100%',

@@ -10,8 +10,10 @@ class UserApiService extends BaseApiService {
   async login(username, password) {
     let response =  await axios.post(`${API_HOST}/api/user/login`, {username: username, password: password}, config)
     if (response.status == 200) {
-      localStorage.setItem("userInfo", JSON.stringify(response.data))
-      return true
+      if (response.data) {
+        dispatch(setCurrentUser(response.data))
+        return true
+      }
     }
     alert ("Ese usuario no existe")
     return false

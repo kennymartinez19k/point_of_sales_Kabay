@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, Image , Pressable} from 'react-nativ
 import { useTranslation } from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import { addUser, changePassword, changeUser } from '../actions/userAction'
+import services from '../services';
 
 function Button(props) {
     const { onPress, title = 'Save' } = props;
@@ -18,6 +19,13 @@ export default function Login({navigation}) {
   const dispatch = useDispatch();
   const data = useSelector(state => state);
   const { t } = useTranslation();
+
+  const login = async () => {
+    let logged = await services.user.login(data.user.username, data.user.password, dispatch)
+    if (logged){
+      navigation.navigate('Home')
+    } 
+  }
     return (
       <View style={styles.container}>
         <Image
@@ -27,7 +35,7 @@ export default function Login({navigation}) {
         <Text style={styles.subtitle}>{t('login:lifeExperience')}</Text>
         <Text style={styles.titleHelper}>{t('login:introduceData')}</Text>
         <Text>LOGIN: {Object.keys(data)}</Text>
-        <Text>UserName: {data.user.username}</Text>
+        <Text>UserName jaja:</Text>
         <TextInput
           style={styles.TextInput}
           placeholder={t('login:user')}
@@ -41,7 +49,7 @@ export default function Login({navigation}) {
         <StatusBar style="auto" />
         <Button
           title={t('login:login')}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => login()}
         />
         <Button
           title="Pruebas"

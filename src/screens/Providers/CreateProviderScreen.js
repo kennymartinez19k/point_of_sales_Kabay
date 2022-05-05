@@ -1,17 +1,19 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput , Pressable, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import { changeNameExpensive, createExpensive } from '../../actions/expensiveAction';
+import { changeNameProvider, createProvider } from '../../actions/providerAction';
 import DatePicker from 'react-native-datepicker';
-import moment from 'moment';
 
-export const CreateExpensive = ({navigation}) => {
+export const CreateProvider = ({navigation}) => {
  const dispatch = useDispatch();
  const data = useSelector(state => state);
 
+ console.log(Object.keys(data.provider.currentProvider))
+
   const sendInfo = (val) => {
     val.companyId = data.user.currentUser.companyId
-    dispatch(createExpensive(val))
+    console.log(val.companyId, "llllllllllllllllllllllllll")
+    dispatch(createProvider(val))
     navigation.goBack()
   }  
 
@@ -27,65 +29,59 @@ export const CreateExpensive = ({navigation}) => {
         <ScrollView style={styles.container} >
             <View style={styles.list_items}>
                 <View style={styles.item}>
-                   <Text  style={styles.info_title}>Nombre del Gasto</Text> 
+                   <Text  style={styles.info_title}>Nombre del Proveedor</Text> 
                   <TextInput
-                    onChangeText={text => dispatch(changeNameExpensive("name", text)) } value={data.expensive.currentExpensive.name}
+                    onChangeText={text => dispatch(changeNameProvider("name", text)) } value={data.provider.currentProvider.name}
                     style={styles.TextInput}
                     placeholder="Nombre del Producto"
                   />
                 </View>
                 <View style={styles.item}>
-                 <Text style={styles.info_title}>Precio al Gastar</Text> 
+                 <Text style={styles.info_title}>Telefono</Text> 
                   <TextInput
                     style={styles.TextInput}
                     placeholder="Precio"
-                    onChangeText={text => dispatch(changeNameExpensive("amount", text)) } value={data.expensive.currentExpensive.amount}
+                    onChangeText={text => dispatch(changeNameProvider("phone", text)) } value={data.provider.currentProvider.amount}
                     keyboardType='numeric'
                     
                   />
                 </View>
                 <View style={styles.item}>
-                 <Text style={styles.info_title}>Notas</Text> 
+                 <Text style={styles.info_title}>Celular</Text> 
                   <TextInput
                     style={styles.TextInput}
-                    placeholder="Descripcion"
+                    placeholder="Celular"
                     multiline
                     numberOfLines={4}
                     textAlignVertical="top"
-                    onChangeText={text => dispatch(changeNameExpensive("note", text)) } value={data.expensive.currentExpensive.note}
+                    onChangeText={text => dispatch(changeNameProvider("cell", text)) } value={data.provider.currentProvider.note}
                   />
                 </View>
                 <View style={styles.item}>
-                  <Text style={styles.info_title}>Fecha</Text>
-                  <DatePicker
-                  style={styles.datePickerStyle}
-                  date={data.expensive.currentExpensive.date} //initial date from state
-                  mode="date"
-                  placeholder="Seleccione una fecha"
-                  format="YYYY-MM-DD"
-                  confirmBtnText="Confirmar"
-                  cancelBtnText="Cancelar"
-                  customStyles={{
-                    dateIcon: {
-                      position: 'absolute',
-                      left: 0,
-                      top: 4,
-                      marginLeft: 0,
-                    },
-                    dateInput: {
-                      marginLeft: 36,
-                    },
-                  }}
-                  onDateChange={(date) => {
-                    dispatch(changeNameExpensive("date", date));
-                  }}
-                />
+                 <Text style={styles.info_title}>Email</Text> 
+                  <TextInput
+                    style={styles.TextInput}
+                    placeholder="Email"
+                    multiline
+                    numberOfLines={4}
+                    textAlignVertical="top"
+                    onChangeText={text => dispatch(changeNameProvider("email", text)) } value={data.provider.currentProvider.note}
+                  />
                 </View>
-              
-                
+                <View style={styles.item}>
+                 <Text style={styles.info_title}>Dirección</Text> 
+                  <TextInput
+                    style={styles.TextInput}
+                    placeholder="Direccion"
+                    multiline
+                    numberOfLines={4}
+                    textAlignVertical="top"
+                    onChangeText={text => dispatch(changeNameProvider("address", text)) } value={data.provider.currentProvider.note}
+                  />
+                </View>
             </View>
             <View style={styles.btn_container}>
-                <Button onPress={() => sendInfo(data.expensive.currentExpensive)} title="Crear"/>
+                <Button onPress={() => sendInfo(data.provider.currentProvider)} title="Crear"/>
             </View>
             
         </ScrollView>       

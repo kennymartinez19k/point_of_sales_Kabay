@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentExpensive, getExpensive, resetExpensive, deleteExpensive, setExpensiveForDisplay } from '../../actions/expensiveAction';
+import { setCurrentProvider, getProvider, resetProvider, deleteProvider, setProviderForDisplay } from '../../actions/providerAction';
 import { TemplateItem } from '../../components/TemplateItems'
-import budget from '../../../assets/budget.png'
+import supplier from '../../../assets/supplier.png'
 
-export const Expensive = ({ navigation }) => {
+export const Provider = ({ navigation }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getExpensive())
+        dispatch(getProvider())
     }, [])
     const data = useSelector(state => state);
 
@@ -17,31 +17,31 @@ export const Expensive = ({ navigation }) => {
         return (
             <>
                 <Text style={styles.title_item}>{prod.name}</Text>
-                <Text style={styles.info_item}>{prod.amount}</Text>
-                <Text style={styles.info_item}>{prod.note} </Text>
-                <Text style={styles.info_item}>{prod.date}</Text>
+                <Text style={styles.info_item}>{prod.phone}</Text>
+                <Text style={styles.info_item}>{prod.email}</Text>
+                <Text style={styles.info_item}>{prod.address}</Text>
             </>
         )
     }
 
     return (
         <TemplateItem
-            images={budget}
+            images={supplier}
             data={{
-                item: data.expensive.expensiveForDisplay,
-                searchItem: data.expensive.searchExpensive,
-                placeholderSearch: "Buscar Gastos"
+                item: data.provider.providerForDisplay,
+                searchItem: data.provider.searchProvider,
+                placeholderSearch: "Buscar Proveedor"
             }}
             listText={listText}
             methods={{
-                resetCurrentItem: resetExpensive,
-                setCurrentItem: setCurrentExpensive,
-                deleteItem: deleteExpensive,
-                setItemForDisplay: setExpensiveForDisplay
+                resetCurrentItem: resetProvider,
+                setCurrentItem: setCurrentProvider,
+                deleteItem: deleteProvider,
+                setItemForDisplay: setProviderForDisplay
             }}
             routes={{
-                createItem: "CreateExpensive",
-                details: "ExpensiveDetails"
+                createItem: "CreateProvider",
+                details: "ProviderDetails"
             }}
             navigation={navigation}
         />

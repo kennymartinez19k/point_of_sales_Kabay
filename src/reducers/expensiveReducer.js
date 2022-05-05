@@ -47,7 +47,8 @@ const expensiveReducer = (state = INITIAL_STATE, action) => {
             
         case ACTION_DELETE_EXPENSIVE:
                 let deleteExpensive = [...state.expensive]
-                let viewIndex = deleteExpensive.findIndex(x => x.key == `View_${action.payload}`)
+                console.log(state.expensive)
+                let viewIndex = deleteExpensive.findIndex(x => x.id == action.payload)
                 deleteExpensive.splice(viewIndex, 1)
                 return {...state, expensive: deleteExpensive, expensiveForDisplay: deleteExpensive };
         case ACTION_SET_CURRENT_EXPENSIVE: 
